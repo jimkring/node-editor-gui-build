@@ -23,21 +23,26 @@ jobs:
     
       # Check-out repository
       - uses: actions/checkout@v3
+        with:
+          repository: bhowiebkr/logic-node-editor
 
       # Setup Python
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          python-version: '3.9' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      - run: |
+          python -m pip install --upgrade pip
 
       # Build python script into a stand-alone exe
-      - uses: jimkring/python-script-to-executable@v0.2.0
+      - uses: Nuitka/Nuitka-Action@v0.2.0
         with:
-          script-name: hello_world.py
-
+          script-name: main.py
+          onefile: true
+          
       # Uploads artifact
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: exe
-          path: build/hello_world.exe
+          path: build/*.exe
