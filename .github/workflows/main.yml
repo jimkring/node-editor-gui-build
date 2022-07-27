@@ -35,10 +35,12 @@ jobs:
           python -m pip install --upgrade pip
 
       # Build python script into a stand-alone exe
-      - uses: Nuitka/Nuitka-Action@v0.2.0
+      - uses: Nuitka/Nuitka-Action@pyside2-options
         with:
           script-name: main.py
           onefile: true
+          enable-plugin-pyside2: true
+          disable-console: true
           
       # Uploads artifact
       - name: Upload Artifact
